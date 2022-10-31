@@ -19,6 +19,7 @@
 
 (use-modules (guix packages)
              ((guix licenses) #:prefix license:)
+             (guix gexp)
              (guix git-download)
              (guix build-system asdf)
              (gnu packages)
