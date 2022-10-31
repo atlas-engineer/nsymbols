@@ -42,7 +42,7 @@ to the predicate of this type as a function symbol.")
                    (:type string-designator))
                   (values list &optional))
         package-symbols))
-(defun package-symbols (packages &key (visibility :any) type)
+(defun package-symbols (packages &key (visibility :any) (type :any))
   "Return the list of all symbols from PACKAGES.
 If VISIBILITY is specified, only include symbols with that visibility.
 If TYPE is specified, only include symbols of that type.
@@ -52,9 +52,7 @@ VISIBILITY can be one of :ANY, :INTERNAL, :EXTERNAL, or :INHERITED."
   (let* ((packages (uiop:ensure-list packages))
          (symbols
            (delete-if-not
-            (if type
-                (symbol-function (gethash (string type) *symbol-types*))
-                #'identity)
+            (symbol-function (gethash (string type) *symbol-types*))
             (loop for package in (mapcar #'find-package packages)
                   append
                   (if (eq :external visibility)
