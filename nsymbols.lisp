@@ -28,9 +28,10 @@
                      symbols)))
 (export 'filter-symbols :nsymbols)
 
-(defvar *symbol-types* (make-hash-table :test 'equalp)
-  "The table from the name of the symbol type (as a symbol name string)
-to the predicate of this type as a function symbol.")
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defvar *symbol-types* (make-hash-table :test 'equalp)
+    "The table from the name of the symbol type (as a symbol name string)
+to the predicate of this type as a function symbol."))
 
 (deftype symbol-type (type)
   (let ((type-name (string type)))
@@ -68,9 +69,10 @@ VISIBILITY can be one of :ANY, :INTERNAL, :EXTERNAL, or :INHERITED."
        (filter-symbols visibility symbols)))))
 (export 'package-symbols :nsymbols)
 
-(defvar %symbol% nil
-  "Special variable to bind symbols during type-checking to.")
-(export '%symbol% :nsymbols)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defvar %symbol% nil
+    "Special variable to bind symbols during type-checking to.")
+  (export '%symbol% :nsymbols))
 
 (defmacro define-symbol-type (name (&rest parents) &body predicate-body)
   "Define a new symbol type.
@@ -101,7 +103,7 @@ the symbol being checked with a special variable %SYMBOL%."
          (predicate-name (intern (uiop:strcat proper-name "-SYMBOL-P") :nsymbols))
          (type-name (intern (uiop:strcat proper-name "-SYMBOL") :nsymbols))
          (package-operation-name (intern (uiop:strcat "PACKAGE-" plural-name) :nsymbols)))
-    `(progn
+    `(eval-when (:compile-toplevel :load-toplevel :execute)
        (defun ,predicate-name (%symbol%)
          ,@predicate-body)
        (setf (gethash ,proper-name *symbol-types*)
