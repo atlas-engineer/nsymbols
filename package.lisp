@@ -14,7 +14,7 @@ There are functions directly listing symbols:
 - `package-classes'.
 - `package-structures'.
 
-And there are respective types for those symbols to check validity:
+And there are respective CL types for those symbols to check symbol validity:
 - `variable-symbol'.
 - `function-symbol'.
 - `generic-function-symbol'.

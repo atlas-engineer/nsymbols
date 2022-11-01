@@ -84,11 +84,11 @@ for convenience (%NAME% is substituted with NAME):
 - PACKAGE-%NAME%S -- a configurable package symbol listing.
 
 In other words, it generates VARIABLE-SYMBOL-P, VARIABLE-SYMBOL, and
-PACKAGE-VARIABLES for VARIABLE type.
+PACKAGE-VARIABLES for VARIABLE symbol type.
 
-NAME is a symbol designator to reference this type in
+NAME is a symbol designator to reference this symbol type in
 `resolve-symbol', or a list of two symbol designators:
-- First symbol designator is the type name.
+- First symbol designator is the symbol type name.
 - Second designator is its plural version, if atypical.
 
 PREDICATE-BODY is the body of the boolean-returning function to find
@@ -179,8 +179,9 @@ A subpackage has a name that starts with that of PACKAGE followed by a '/' separ
                   (values symbol list &optional))
         resolve-symbol))
 (defun resolve-symbol (designator type &optional (packages *default-packages*))
-  "Find the symbol (of TYPE) designated by DESIGNATOR in PACKAGES (and subpackages).
-PACKAGES should be a package designator or a list of package designators."
+  "Find the symbol (of symbol type TYPE) designated by DESIGNATOR in PACKAGES (and subpackages).
+PACKAGES should be a package designator or a list of package
+designators."
   (let* ((packages (uiop:ensure-list packages))
          (designator (string designator))
          (all-packages (list-all-packages))
