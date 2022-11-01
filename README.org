@@ -46,7 +46,7 @@ Nsymbols uses the auto-generated predicates to check whether the given symbol be
   (define-symbol-type function ()
     (fboundp %symbol%))
 #+end_src
-creates a type ~FUNCTION~ that will only list ~fboundp~ symbols. Underneath this short type definition, a set of helpers is generated:
+creates a symbol type ~:FUNCTION~ that will only list ~fboundp~ symbols. Underneath this short type definition, a set of helpers is generated:
 - ~function-symbol-p~ predicate to check whether a symbol belongs to this group. That's where the body of ~define-symbol-type~ goes.
 - ~function-symbol~ type to type-check the symbol you use.
 - ~package-functions~ function to list function symbols in the package based on their visibility.
