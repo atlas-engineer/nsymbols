@@ -60,3 +60,5 @@ of symbols you want:
 
 ;; Search a custom type defined earlier:
 (nsymbols:resolve-symbol \"ALL-PACKAGES\" :starts-with-a :nsymbols)"))
+
+(push :nsymbols *features*)
