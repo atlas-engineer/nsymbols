@@ -17,7 +17,7 @@
                 symbol-visibility))
 (defun symbol-visibility (symbol)
   (nth-value 1 (find-symbol (symbol-name symbol) (symbol-package symbol))))
-(export 'symbol-visibility :nsymbols)
+(export 'symbol-visibility)
 
 (declaim (ftype (function (symbol-visibility list) list)
                 filter-symbols))
@@ -26,7 +26,7 @@
       symbols
       (remove-if-not (lambda (s) (eq visibility (symbol-visibility s)))
                      symbols)))
-(export 'filter-symbols :nsymbols)
+(export 'filter-symbols)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defvar *symbol-types* (make-hash-table :test 'equalp)
@@ -67,12 +67,12 @@ VISIBILITY can be one of :ANY, :INTERNAL, :EXTERNAL, or :INHERITED."
        symbols)
       ((:internal :inherited)
        (filter-symbols visibility symbols)))))
-(export 'package-symbols :nsymbols)
+(export 'package-symbols)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defvar %symbol% nil
     "Special variable to bind symbols during type-checking to.")
-  (export '%symbol% :nsymbols))
+  (export '%symbol%))
 
 (defmacro define-symbol-type (name (&rest parents) &body predicate-body)
   "Define a new symbol type.
@@ -117,7 +117,7 @@ the symbol being checked with a special variable %SYMBOL%."
        (export (quote ,predicate-name) :nsymbols)
        (export (quote ,type-name) :nsymbols)
        (export (quote ,package-operation-name) :nsymbols))))
-(export 'define-symbol-type :nsymbols)
+(export 'define-symbol-type)
 
 ;; Recognize :ANY/"ANY"/'ANY in `package-symbols' and `resolve-symbol'.
 (setf (gethash "ANY" *symbol-types*) 'identity)
@@ -160,7 +160,7 @@ A subpackage has a name that starts with that of PACKAGE followed by a '/' separ
   (or (eq (find-package subpackage) (find-package package))
       (uiop:string-prefix-p (uiop:strcat (package-name package) "/")
                             (package-name subpackage))))
-(export 'subpackage-p :nsymbols)
+(export 'subpackage-p)
 
 (declaim  (ftype (function (package-designator) (cons package-designator *)) subpackages))
 (defun subpackages (package)
@@ -168,11 +168,11 @@ A subpackage has a name that starts with that of PACKAGE followed by a '/' separ
   (append (list package)
           (remove-if-not (lambda (p) (subpackage-p p package))
                          (list-all-maybe-subpackages))))
-(export 'subpackages :nsymbols)
+(export 'subpackages)
 
 (defvar *default-packages* '(:cl :cl-user)
   "Package designator or a list of package designators for `resolve-symbol' to use by default.")
-(export '*default-packages* :nsymbols)
+(export '*default-packages*)
 
 (declaim
  (ftype (function (string-designator string-designator &optional (or package-designator (cons package-designator *)))
