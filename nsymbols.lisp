@@ -35,7 +35,9 @@ to the predicate of this type as a function symbol."))
 
 (deftype symbol-type (type)
   (let ((type-name (string type)))
-    `(satisfies ,(gethash type-name *symbol-types*))))
+    (if (gethash type-name *symbol-types*)
+        `(satisfies ,(gethash type-name *symbol-types*))
+        (error "There's no such symbol type: ~a" type))))
 
 (declaim
  (ftype (function ((or list package-designator)
