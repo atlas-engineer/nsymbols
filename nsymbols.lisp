@@ -131,7 +131,7 @@ the symbol being checked with a special variable %SYMBOL%."
   (fboundp %symbol%))
 
 (define-symbol-type generic-function (function)
-  (typep (symbol-function %symbol%) 'standard-generic-function))
+  (typep (ignore-errors (symbol-function %symbol%)) 'standard-generic-function))
 
 ;; FIXME: define package-methods? It's not about symbols anymore...
 
