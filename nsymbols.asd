@@ -6,7 +6,7 @@
   :author "Atlas Engineer LLC"
   :homepage "https://github.com/atlas-engineer/nsymbols"
   :license  "BSD-3 Clause"
-  :version "0.1.0"
+  :version "0.2.0"
   :depends-on ()
   :serial t
   :components ((:file "package")
