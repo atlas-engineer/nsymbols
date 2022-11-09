@@ -5,11 +5,12 @@
 Nsymbols extends the regular package API of ANSI CL with more operations, allowing one to list:
 - ~package-symbols~.
 - ~package-variables~.
-- ~package-functions~.
-  - ~package-generic-functions~.
+- ~package-functions~ (and ~package-functions*~ in ~nsymbols/star~).
+  - ~package-generic-functions~ (and ~package-generic-functions*~ in ~nsymbols/star~).
   - ~package-macros~.
-- ~package-classes~.
-- ~package-structures~.
+  - ~package-methods*~ in ~nsymbols/star~.
+- ~package-classes~ (and ~package-classes*~ in ~nsymbols/star~)
+- ~package-structures~ (and ~package-structures*~ in ~nsymbols/star~).
 - And other symbol types, given ~define-symbol-type~ for those.
 Nsymbols can also find symbols by their name/matching symbol with ~resolve-symbol~. All these operations are aware of symbol visibility in the given packages, due to a new ~symbol-visibility~ function.
 

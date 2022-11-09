@@ -13,6 +13,11 @@
                (:file "nsymbols"))
   :in-order-to ((test-op (test-op "nsymbols/tests"))))
 
+(defsystem "nsymbols/star"
+  :description "Versions of regular `nsymbols' package operations, but with more intuitive results."
+  :depends-on (#:nsymbols #:closer-mop)
+  :components ((:file "star")))
+
 (defsystem "nsymbols/tests"
   :depends-on (#:nsymbols #:lisp-unit2)
   :serial t

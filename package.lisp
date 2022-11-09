@@ -30,6 +30,16 @@ These types use the predicates to check symbol type:
 - `class-symbol-p'.
 - `structure-symbol-p'.
 
+Adding to the regular package-* listings, there is a \"nsymbols/star\"
+ASDF system with:
+- `package-functions*'.
+- `package-generic-functions*'.
+- `package-methods*'.
+- `package-classes*'.
+- `package-structures*'
+which return the respective function, class, method etc. objects
+instead of symbols for those.
+
 As you can see, those are pretty regular. That's due to using
 `define-symbol-type' that saves a lot of work in defining new types of
 symbols. More so: it allows assigning a name to a symbol type, so that
