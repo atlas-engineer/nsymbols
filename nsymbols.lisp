@@ -133,8 +133,6 @@ the symbol being checked with a special variable %SYMBOL%."
 (define-symbol-type generic-function (function)
   (typep (ignore-errors (symbol-function %symbol%)) 'standard-generic-function))
 
-;; FIXME: define package-methods? It's not about symbols anymore...
-
 (define-symbol-type macro (function)
   (macro-function %symbol%))
 
