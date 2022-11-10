@@ -53,5 +53,6 @@ creates a symbol type ~:FUNCTION~ that will only list ~fboundp~ symbols. Underne
 - ~package-functions~ function to list function symbols in the package based on their visibility.
 
 * Roadmap
-- [ ] Maybe use Closer MOP to get (more reliable?) list of classes, structures, and slots (current implementation makes slot listing impossible).
-- [ ] Introduce ~package-functions*~-like starred helpers returning function/class/method/slot objects instead of symbols designating them?
+- [X] Maybe use Closer MOP to get (more reliable?) list of classes, structures, and slots (current implementation makes slot listing impossible).
+- [X] Introduce ~package-functions*~-like starred helpers returning function/class/method/slot objects instead of symbols designating them?
+- [ ] ~package-slots*~.

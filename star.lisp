@@ -28,3 +28,5 @@
   "Returns a list of structure objects (as per find-class) for PACKAGES, visible with VISIBILITY."
   (mapcar #'find-class (package-structures packages visibility)))
 (export 'package-structures*)
+
+;; TODO: package-slots*.
