@@ -55,4 +55,4 @@ creates a symbol type ~:FUNCTION~ that will only list ~fboundp~ symbols. Underne
 * Roadmap
 - [X] Maybe use Closer MOP to get (more reliable?) list of classes, structures, and slots (current implementation makes slot listing impossible).
 - [X] Introduce ~package-functions*~-like starred helpers returning function/class/method/slot objects instead of symbols designating them?
-- [ ] ~package-slots*~.
+- [X] ~package-slots*~.

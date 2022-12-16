@@ -29,4 +29,9 @@
   (mapcar #'find-class (package-structures packages visibility)))
 (export 'package-structures*)
 
-;; TODO: package-slots*.
+(defun package-slots* (packages &optional (visibility :any))
+  "Returns `closer-mop:slot-definition's for slots of classes in PACKAGES, visible with VISIBILITY."
+  (apply #'append
+         (mapcar #'closer-mop:class-direct-slots
+                 (package-classes* packages visibility))))
+(export 'package-slots*)
