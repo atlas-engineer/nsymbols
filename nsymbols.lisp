@@ -3,6 +3,16 @@
 
 (in-package #:nsymbols)
 
+(define-condition multiple-resolved-symbols-error (error)
+  ((designator :initarg :designator
+               :accessor designator)
+   (results :initarg :results
+            :accessor results))
+  (:report (lambda (condition stream)
+             (format stream "Multiple ~a symbols found:~%~a"
+                     (designator condition) (results condition)))))
+(export 'multiple-resolved-symbols-error)
+
 (deftype symbol-visibility ()
   `(member :internal :external :inherited :any))
 
@@ -175,13 +185,15 @@ A subpackage has a name that starts with that of PACKAGE followed by a '/' separ
 (export '*default-packages*)
 
 (declaim
- (ftype (function (string-designator string-designator &optional (or package-designator (cons package-designator *)))
+ (ftype (function (string-designator string-designator &optional (or package-designator (cons package-designator *)) boolean)
                   (values symbol list &optional))
         resolve-symbol))
-(defun resolve-symbol (designator type &optional (packages *default-packages*))
+(defun resolve-symbol (designator type &optional (packages *default-packages*) error-p)
   "Find the symbol (of symbol type TYPE) designated by DESIGNATOR in PACKAGES (and subpackages).
-PACKAGES should be a package designator or a list of package
-designators."
+PACKAGES should be a package designator or a list thereof.
+ERROR-P, when present and true, raises a continuable error of type
+`multiple-resolved-symbols-error' if there is more than one symbol
+found matching the DESIGNATOR."
   (let* ((packages (uiop:ensure-list packages))
          (designator (string designator))
          (all-packages (list-all-packages))
@@ -191,8 +203,12 @@ designators."
          (symbols (package-symbols subpackages :type type)))
     (let* ((results (remove-if-not (lambda (sym) (string= designator (symbol-name sym)))
                                    symbols)))
-      (when (> (length results) 1)
-        (warn "Multiple ~a symbols found: ~a" designator results))
+      (cond
+        ((and (> (length results) 1) error-p)
+         (cerror "Proceed with the first matching symbol" 'multiple-resolved-symbols-error
+                 :designator designator :symbols results))
+        ((> (length results) 1)
+         (warn "Multiple ~a symbols found: ~a" designator results)))
       (values (first results)
               results))))
 (export 'resolve-symbol)

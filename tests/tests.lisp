@@ -15,8 +15,8 @@
 
 (define-test nsymbols-inspection ()
   (let ((functions (nsymbols:package-functions :nsymbols :internal)))
-    (assert-eql 1 (length functions))
-    (assert-eq 'nsymbols::list-all-maybe-subpackages (first functions)))
+    (assert-eql 3 (length functions))
+    (assert-eq (member 'nsymbols::list-all-maybe-subpackages functions)))
   (let ((macros (nsymbols:package-macros :nsymbols)))
     (assert-eql 1 (length macros))
     (assert-eq 'nsymbols:define-symbol-type (first macros)))
