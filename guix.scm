@@ -30,7 +30,7 @@
 (define-public sbcl-nsymbols
   (package
    (name "sbcl-nsymbols")
-   (version "0.2.0")
+   (version "0.2.1")
    (source
     (local-file (dirname (current-filename)) #:recursive? #t)
     ;;;; Or this, in case of contributing to Guix.
