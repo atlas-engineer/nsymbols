@@ -37,6 +37,7 @@ ASDF system with:
 - `package-methods*'.
 - `package-classes*'.
 - `package-structures*'
+- `package-slots*'
 which return the respective function, class, method etc. objects
 instead of symbols for those.
 
