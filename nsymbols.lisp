@@ -9,7 +9,7 @@
    (results :initarg :results
             :accessor results))
   (:report (lambda (condition stream)
-             (format stream "Multiple ~a symbols found:~%~a"
+             (format stream "Multiple ~a symbols found:~%~s"
                      (designator condition) (results condition)))))
 (export 'multiple-resolved-symbols-error)
 
@@ -208,7 +208,7 @@ found matching the DESIGNATOR."
          (cerror "Proceed with the first matching symbol" 'multiple-resolved-symbols-error
                  :designator designator :symbols results))
         ((> (length results) 1)
-         (warn "Multiple ~a symbols found: ~a" designator results)))
+         (warn "Multiple ~a symbols found: ~s" designator results)))
       (values (first results)
               results))))
 (export 'resolve-symbol)
