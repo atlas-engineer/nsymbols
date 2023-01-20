@@ -122,8 +122,8 @@ the symbol being checked with a special variable %SYMBOL%."
        (setf (gethash ,proper-name *symbol-types*)
              (quote ,predicate-name))
        (deftype ,type-name ()
-         (quote (and symbol ,@(loop for parent in parents
-                                    collect `(symbol-type ,parent))
+         (quote (and ,@(loop for parent in parents
+                             collect `(symbol-type ,parent))
                      (satisfies ,predicate-name))))
        (defun ,package-operation-name (packages &optional (visibility :any))
          (package-symbols packages :visibility visibility :type ,proper-name))
