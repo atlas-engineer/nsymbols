@@ -55,6 +55,8 @@
    ;; The official Guix package should use `sbcl-*' inputs though.
    (native-inputs (list cl-lisp-unit2 sbcl))
    (inputs (list cl-closer-mop))
+   (arguments
+    '(#:asd-systems '("nsymbols" "nsymbols/star")))
    (synopsis
     "Functions to search, filter, and group symbols in chosen packages.")
    (home-page "https://github.com/atlas-engineer/nsymbols")
