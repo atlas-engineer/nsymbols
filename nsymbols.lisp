@@ -157,30 +157,6 @@ the symbol being checked with a special variable %SYMBOL%."
   (and (find-class %symbol% nil)
        (typep (find-class %symbol%) 'structure-class)))
 
-(declaim (ftype (function () list) list-all-maybe-subpackages))
-(defun list-all-maybe-subpackages ()
-  (remove-if-not (lambda (pkg) (find #\/ (package-name pkg)))
-                 (list-all-packages)))
-
-(declaim
- (ftype (function (package-designator package-designator) (values boolean &optional))
-        subpackage-p))
-(defun subpackage-p (subpackage package)
-  "Return non-nil if SUBPACKAGE is a subpackage of PACKAGE or is PACKAGE itself.
-A subpackage has a name that starts with that of PACKAGE followed by a '/' separator."
-  (or (eq (find-package subpackage) (find-package package))
-      (uiop:string-prefix-p (uiop:strcat (package-name package) "/")
-                            (package-name subpackage))))
-(export 'subpackage-p)
-
-(declaim  (ftype (function (package-designator) (cons package-designator *)) subpackages))
-(defun subpackages (package)
-  "Return all subpackages of PACKAGE, including itself."
-  (append (list package)
-          (remove-if-not (lambda (p) (subpackage-p p package))
-                         (list-all-maybe-subpackages))))
-(export 'subpackages)
-
 (defvar *default-packages* '(:cl :cl-user)
   "Package designator or a list of package designators for `resolve-symbol' to use by default.")
 (export '*default-packages*)
@@ -197,11 +173,7 @@ ERROR-P, when present and true, raises a continuable error of type
 found matching the DESIGNATOR."
   (let* ((packages (uiop:ensure-list packages))
          (designator (string designator))
-         (all-packages (list-all-packages))
-         (subpackages (if (equal packages all-packages)
-                          all-packages
-                          (delete-duplicates (apply #'append (mapcar #'subpackages packages)))))
-         (symbols (package-symbols subpackages :type type)))
+         (symbols (package-symbols packages :type type)))
     (let* ((results (remove-if-not (lambda (sym) (string= designator (symbol-name sym)))
                                    symbols)))
       (cond
