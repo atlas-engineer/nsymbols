@@ -179,9 +179,7 @@ found matching the DESIGNATOR."
       (cond
         ((and (> (length results) 1) error-p)
          (cerror "Proceed with the first matching symbol" 'multiple-resolved-symbols-error
-                 :designator designator :symbols results))
-        ((> (length results) 1)
-         (warn "Multiple ~a symbols found: ~s" designator results)))
+                 :designator designator :symbols results)))
       (values (first results)
               results))))
 (export 'resolve-symbol)
