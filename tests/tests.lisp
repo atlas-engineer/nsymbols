@@ -21,8 +21,8 @@
     (assert-eql 1 (length macros))
     (assert-eq 'nsymbols:define-symbol-type (first macros)))
   ;; CCL compiles conditions as classes.
-  (assert-eql #-ccl 0
-              #+ccl 1
+  (assert-eql #-(or ccl ecl) 0
+              #+(or ccl ecl) 1
               (length (nsymbols:package-classes :nsymbols)))
   (assert-eql 0 (length (nsymbols:package-structures :nsymbols)))
   (assert-eql 3 (length (nsymbols:package-variables :nsymbols)))
