@@ -20,7 +20,10 @@
   (let ((macros (nsymbols:package-macros :nsymbols)))
     (assert-eql 1 (length macros))
     (assert-eq 'nsymbols:define-symbol-type (first macros)))
-  (assert-eql 0 (length (nsymbols:package-classes :nsymbols)))
+  ;; CCL compiles conditions as classes.
+  (assert-eql #-ccl 0
+              #+ccl 1
+              (length (nsymbols:package-classes :nsymbols)))
   (assert-eql 0 (length (nsymbols:package-structures :nsymbols)))
   (assert-eql 3 (length (nsymbols:package-variables :nsymbols)))
   (assert-eql 2 (length (nsymbols:package-variables :nsymbols :external)))
