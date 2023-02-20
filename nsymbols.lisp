@@ -9,8 +9,11 @@
    (results :initarg :results
             :accessor results))
   (:report (lambda (condition stream)
-             (format stream "Multiple ~a symbols found:~%~s"
-                     (designator condition) (results condition)))))
+             (format stream "Multiple ~a symbols found:"
+                     (designator condition))
+             (dolist (result (results condition))
+               (terpri stream)
+               (prin1 result stream)))))
 (export 'multiple-resolved-symbols-error)
 
 (deftype symbol-visibility ()
