@@ -13,7 +13,8 @@
                      (designator condition))
              (dolist (result (results condition))
                (terpri stream)
-               (prin1 result stream)))))
+               (prin1 result stream))))
+  (:documentation "Raised when `resolve-symbol' finds multiple symbols with `error-p' set to T."))
 (export 'multiple-resolved-symbols-error)
 
 (deftype symbol-visibility ()
@@ -29,12 +30,15 @@
 (declaim (ftype (function (symbol) symbol-visibility)
                 symbol-visibility))
 (defun symbol-visibility (symbol)
+  "Return the visibility of a symbol as one of :internal, :external, or :inherited."
   (nth-value 1 (find-symbol (symbol-name symbol) (symbol-package symbol))))
 (export 'symbol-visibility)
 
 (declaim (ftype (function (symbol-visibility list) list)
                 filter-symbols))
 (defun filter-symbols (visibility symbols)
+  "Filter SYMBOLS by VISIBILITY.
+If visibility is :any, all symbols are accepted."
   (if (eq visibility :any)
       symbols
       (remove-if-not (lambda (s) (eq visibility (symbol-visibility s)))
@@ -120,15 +124,18 @@ the symbol being checked with a special variable %SYMBOL%."
          (package-operation-name (intern (uiop:strcat "PACKAGE-" plural-name) :nsymbols)))
     `(eval-when (:compile-toplevel :load-toplevel :execute)
        (defun ,predicate-name (%symbol%)
+         ,(format nil "Auto-generated predicate for symbol type ~a" proper-name)
          (and (symbolp %symbol%)
               ,@predicate-body))
        (setf (gethash ,proper-name *symbol-types*)
              (quote ,predicate-name))
        (deftype ,type-name ()
+         ,(format nil "Auto-generated type definition for symbol type ~a" proper-name)
          (quote (and ,@(loop for parent in parents
                              collect `(symbol-type ,parent))
                      (satisfies ,predicate-name))))
        (defun ,package-operation-name (packages &optional (visibility :any))
+         ,(format nil "Auto-generated package lister for symbol type ~a" proper-name)
          (package-symbols packages :visibility visibility :type ,proper-name))
        (export (quote ,predicate-name) :nsymbols)
        (export (quote ,type-name) :nsymbols)

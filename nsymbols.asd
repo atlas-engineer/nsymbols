@@ -11,7 +11,8 @@
   :serial t
   :components ((:file "package")
                (:file "nsymbols"))
-  :in-order-to ((test-op (test-op "nsymbols/tests"))))
+  :in-order-to ((test-op (test-op "nsymbols/tests")
+                         (test-op "nsymbols/tests/compilation"))))
 
 (defsystem "nsymbols/star"
   :description "Versions of regular `nsymbols' package operations, but with more intuitive results."
@@ -19,18 +20,17 @@
   :components ((:file "star")))
 
 (defsystem "nsymbols/tests"
-  :depends-on (#:nsymbols #:lisp-unit2)
+  :defsystem-depends-on ("nasdf")
+  :class :nasdf-test-system
+  :depends-on ("nsymbols")
+  :targets (:package :nsymbols/tests)
   :serial t
   :pathname "tests/"
   :components ((:file "package")
-               (:file "tests"))
-  :perform (test-op (o c)
-                    (let* ((*debugger-hook* nil)
-                           (test-results (symbol-call :lisp-unit2 :run-tests
-                                                      :package :nsymbols/tests
-                                                      :run-contexts (find-symbol "WITH-SUMMARY-CONTEXT" :lisp-unit2))))
-                      (when (or
-                             (uiop:symbol-call :lisp-unit2 :failed test-results)
-                             (uiop:symbol-call :lisp-unit2 :errors test-results))
-                        ;; Arbitrary but hopefully recognizable exit code.
-                        (quit 18)))))
+               (:file "tests")))
+
+(defsystem "nsymbols/tests/compilation"
+  :defsystem-depends-on ("nasdf")
+  :class :nasdf-compilation-test-system
+  :depends-on ("nsymbols" "nsymbols/star")
+  :packages (:nsymbols))
