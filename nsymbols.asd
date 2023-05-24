@@ -5,6 +5,8 @@
   :description "A set of convenience functions to list class, variable, function, and other symbols."
   :author "Atlas Engineer LLC"
   :homepage "https://github.com/atlas-engineer/nsymbols"
+  :bug-tracker "https://github.com/atlas-engineer/nsymbols/issues"
+  :source-control (:git "https://github.com/atlas-engineer/nsymbols.git")
   :license  "BSD-3 Clause"
   :version "0.3.1"
   :depends-on ()
