@@ -15,7 +15,13 @@
 
 (define-test nsymbols-inspection ()
   (let ((functions (nsymbols:package-functions :nsymbols :internal)))
-    (assert-eql 2 (length functions))
+    (assert-eql
+     ;; CLISP returns: (NSYMBOLS::DESIGNATOR NSYMBOLS::RESULTS
+     ;; NSYMBOLS::|(SETF NSYMBOLS:RESULTS)| NSYMBOLS::|(SETF
+     ;; NSYMBOLS:DESIGNATOR)|)
+     #+clisp 4
+     #-clisp 2
+     (length functions))
     (assert-true (member 'nsymbols::designator functions)))
   (let ((macros (nsymbols:package-macros :nsymbols)))
     (assert-eql 1 (length macros))
