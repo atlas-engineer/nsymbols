@@ -3,6 +3,9 @@
 
 (in-package #:nsymbols/tests)
 
+(defvar *nsymbols-star-loaded*
+  (fboundp (find-symbol "PACKAGE-FUNCTIONS*" :nsymbols)))
+
 (define-test cl-inspection ()
   (assert-eql 977 (length (nsymbols:package-symbols :cl :visibility :external)))
   (let ((structures (nsymbols:package-structures :cl :external)))
@@ -19,8 +22,11 @@
      ;; CLISP returns: (NSYMBOLS::DESIGNATOR NSYMBOLS::RESULTS
      ;; NSYMBOLS::|(SETF NSYMBOLS:RESULTS)| NSYMBOLS::|(SETF
      ;; NSYMBOLS:DESIGNATOR)|)
-     #+clisp 4
-     #-clisp 2
+     (if *nsymbols-star-loaded*
+         #+clisp 10
+         #-clisp 8
+         #+clisp 4
+         #-clisp 2)
      (length functions))
     (assert-true (member 'nsymbols::designator functions)))
   (let ((macros (nsymbols:package-macros :nsymbols)))
