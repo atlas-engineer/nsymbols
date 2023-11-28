@@ -1,5 +1,5 @@
 ;;;; SPDX-FileCopyrightText: Atlas Engineer LLC
-;;;; SPDX-License-Identifier: BSD-3 Clause
+;;;; SPDX-License-Identifier: BSD-3-Clause
 
 (defsystem "nsymbols"
   :description "A set of convenience functions to list class, variable, function, and other symbols."
