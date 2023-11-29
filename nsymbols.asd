@@ -8,7 +8,7 @@
   :bug-tracker "https://github.com/atlas-engineer/nsymbols/issues"
   :source-control (:git "https://github.com/atlas-engineer/nsymbols.git")
   :license  "BSD-3 Clause"
-  :version "0.3.1"
+  :version "0.3.2"
   :serial t
   :components ((:file "package")
                (:file "nsymbols"))
