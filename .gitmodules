@@ -1,4 +1,0 @@
-[submodule "_build/closer-mop"]
-	path = _build/closer-mop
-	url = https://github.com/pcostanza/closer-mop
-	shallow = true
